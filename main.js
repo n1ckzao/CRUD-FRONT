@@ -1,55 +1,35 @@
 'use strict'
 
-async function getContatos() {
-    const url = 'https://bakcend-fecaf-render.onrender.com/contatos'
-    const response = await fetch(url)
-    const data = await response.json()
-    console.log(data)
-    return data
+import { getContatos, getContatosPorNome } from "./js/contatos.js"
+
+function criarCard(contato){
+    const container = document.getElementById("container")
+    const card = document.createElement("div")
+    card.classList.add("card-contato")
+    card.innerHTML = `
+    <img src="${contato.foto}" alt="">
+    <h2>${contato.nome}</h2>
+    <p>${contato.celular}</p>
+    `
+    container.appendChild(card)
 }
 
-async function postContatos(contato){
-    const url = 'https://bakcend-fecaf-render.onrender.com/contatos/'
-    const options = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(contato)
+async function exibirContatos() {
+    const contatos = await getContatos(evento.target.value)
+    contatos.forEach(criarCard)
+}
+
+async function exibirPesquisa(evento) {
+    const container = document.getElementById("container")
+
+    if(evento.key == 'Enter'){
+        const contatos = await getContatosPorNome(evento.target.value)
+        container.replaceChildren()
+        contatos.forEach (criarCard)
     }
-    const response = await fetch(url, options)
-
-    return response.ok
 }
 
-async function putContatos(contato, id){
-    const url = `https://bakcend-fecaf-render.onrender.com/contatos/${id}`
-    const options = {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(contato)
-    }
-    const response = await fetch(url, options)
+exibirContatos()
 
-    return response.ok
-}
-
-async function deleteContatos(id){
-    const url = `https://bakcend-fecaf-render.onrender.com/contatos/${id}`
-    const options = {
-        method: 'DELETE'
-    }
-    const response = await fetch(url, options)
-    return response.ok
-}
-
-const contato = {
-    "nome": "bah",
-    "celular": "1133",
-    "foto": "bah.png",
-    "email": "bah@gmail.com",
-    "endereco": "Av. bah, 234",
-    "cidade": "Jandira",
-}
+document.getElementById('nome-contato')
+        .addEventListener('keydown', exibirPesquisa)

@@ -1,0 +1,76 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+a{
+    text-decoration: none;
+    color: inherit;
+}
+
+body {   
+    padding: 4rem;
+}
+
+ol, ul, li{
+    list-style: none;
+}
+
+header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 32px;
+    padding-bottom: 32px;
+    border-bottom: 2px solid red;
+}
+header img{
+    height: 48px;
+
+}
+
+header input{
+    height: 48px;
+    flex-grow: 1;
+    border: 1px solid red;
+    outline: none;
+    border-radius: 4px;
+    padding: 0 12px;
+}
+
+header button{
+    height: 48px;
+    background-color: red;
+    color: white;
+    padding: 0 8px;
+    border: none;
+    border-radius: 70px;
+    cursor: pointer;
+}
+main{
+    padding-top: 32px;
+}
+
+.container{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 32px;
+}
+
+.card-contato{
+    height: 300px;
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 2px 2px 8px black;
+    border-bottom: 32px solid red;
+}
+.card-contato img{
+    width: 160px;
+    border-radius: 50%;
+    border: 2px solid red;
+}
