@@ -40,15 +40,30 @@ async function salvarContato(){
     const contato = {
         "nome": document.getElementById('nome').value,
         "celular": document.getElementById('celular').value,
-        "foto": document.getElementById('foto').value,
         "email": document.getElementById('email').value,
         "endereco": document.getElementById('endereco').value,
         "cidade": document.getElementById('cidade').value
     }
-    if(postContatos(contato))
-    alert('Criado com sucesso!')
-     await exibirContatos()
-    voltarHome()
+    const fotoInput = document.getElementById('foto')
+    if (fotoInput.files.length > 0) {
+        const file = fotoInput.files[0]
+        const uploadParams = {
+            file,
+            storageAccount: 'storageimagesfront',
+            sasToken: 'sp=racwl&st=2025-05-13T17:39:49Z&se=2025-07-01T01:39:49Z&sv=2024-11-04&sr=c&sig=9p60y93yaq36%2B4jcIQBCj9ae5GMSb5m24p6tAIUnFLE%3D',
+            containerName: 'fotos',
+        }
+        const imageUrl = await uploadImageToAzure(uploadParams)
+        contato.foto = imageUrl
+    }
+    const isSaved = await postContatos(contato)
+    if (isSaved) {
+        alert('Criado com sucesso!')
+        await exibirContatos()
+        voltarHome()
+    } else {
+        alert('Erro ao criar contato')
+    }
 }
 
 exibirContatos()
